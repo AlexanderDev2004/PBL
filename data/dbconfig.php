@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $databaseHost = 'LAPTOP-MHVH0S2R';
-$databaseName = ''; 
+$databaseName = '';
 $databaseUsername = '';
 $databasePassword = '';
 
@@ -13,5 +13,7 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
+
+// sebaiknya menggunakan folder VMC (Vuewms Model Controller)
 
 ?>
