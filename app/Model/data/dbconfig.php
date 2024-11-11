@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $databaseHost = 'LAPTOP-MHVH0S2R';
-$databaseName = '';
+$databaseName = 'db_tatib_v122';
 $databaseUsername = '';
 $databasePassword = '';
 
@@ -13,7 +13,6 @@ try {
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
-
 
 
 ?>
