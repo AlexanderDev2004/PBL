@@ -14,6 +14,6 @@ try {
     die("Connection failed: " . $e->getMessage());
 }
 
-// sebaiknya menggunakan folder VMC (Vuewms Model Controller)
+
 
 ?>
