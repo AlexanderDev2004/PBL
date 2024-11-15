@@ -8,6 +8,7 @@ class controllersDosen
     public function index()
     {
         include "views/dosen/index.php";
+        
 
     }
 
