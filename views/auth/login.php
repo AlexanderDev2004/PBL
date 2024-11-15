@@ -4,7 +4,7 @@ session_start();
 include_once '../core/dbconfig.php';
 
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];  // NIM atau NIP
+    $username = $_POST['username'];  // NIM atau NIP yang nanti akan di cek
     $password = $_POST['password'];  // Password
 
     // Cek apakah username adalah NIM atau NIP (misalnya, berdasarkan panjang karakter)
