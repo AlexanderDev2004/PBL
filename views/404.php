@@ -8,7 +8,7 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text">
-                        Halaman yang Anda cari tidak ditemukan.
+                        UPPP Anda Tersesat...Halaman yang Anda cari tidak ditemukan.
                     </p>
                 </div>
                 <div class="Back">
