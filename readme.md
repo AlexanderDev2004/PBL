@@ -44,6 +44,6 @@
 <details>
 <summary><h2>Project Folder Structure</h2></summary>
   <br>
-  ![alt text](image.png)
+  <img src="image.png" alt="Project-Folder-Structure" border="0" width="400">
   <br>
   <details>
