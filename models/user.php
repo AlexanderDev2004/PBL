@@ -15,7 +15,7 @@ class User {
             $query = "SELECT * FROM mahasiswa WHERE nim = ?";
         } elseif ($role == "Dosen" || $role == "DPA" || $role == "KomDis") {
             $query = "SELECT * FROM dosen WHERE nip = ?";
-        }
+        } 
 
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("s", $identifier);
