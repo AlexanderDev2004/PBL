@@ -7,7 +7,7 @@
                     <h3 class="card-title">404 Not Found</h3>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">
+                    <p class="text bg-red-800">
                         Halaman yang Anda cari tidak ditemukan.
                     </p>
                 </div>
