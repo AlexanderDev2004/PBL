@@ -40,3 +40,10 @@
   The database was first created in:  
   - Microsoft SQL Server 2019 (RTM) - 15.0.2000.5 (X64)
 </details>
+
+<details>
+<summary><h2>Project Folder Structure</h2></summary>
+  <br>
+  <img src="image.png" alt="Project-Folder-Structure" border="0" width="400">
+  <br>
+  <details>

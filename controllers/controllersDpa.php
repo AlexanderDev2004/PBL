@@ -1,10 +1,24 @@
-<!--  ini untuk controller dpa -->
 <?php
+class ControllerDPA {
+    private $model;
 
-include_once '../models/dpa.php';
-class controllersDpa {
-    public function index()
-    {
-        include "views/dpa/index.php";
+    public function __construct($model) {
+        $this->model = $model;
+    }
+
+    public function index() {
+        $data = $this->model->getAllMahasiswaUnderDPA();
+        include 'views/dpa/index.php';
+    }
+
+    public function pelanggaran($mahasiswaId) {
+        $data = $this->model->getPelanggaranByMahasiswa($mahasiswaId);
+        include 'views/dpa/pelanggaran.php';
+    }
+
+    public function takeAction($pelanggaranId, $action) {
+        $this->model->takeActionOnPelanggaran($pelanggaranId, $action);
+        header('Location: ?controller=dpa&action=index');
     }
 }
+?>

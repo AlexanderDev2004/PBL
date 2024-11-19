@@ -1,12 +1,24 @@
 <?php
+class ControllerMahasiswa {
+    private $model;
 
-include_once '../models/mahasiswa.php';
-
-class controllersMahasiswa
-{
-    public function index()
-    {
-        include "views/mahasiswa/index.php";
+    public function __construct($model) {
+        $this->model = $model;
     }
+
+    public function index() {
+        $data = $this->model->getStudentData($_SESSION['mahasiswa_id']);
+        include 'views/mahasiswa/index.php';
+    }
+
+    public function lihatPelanggaran() {
+        $data = $this->model->getPelanggaranByStudent($_SESSION['mahasiswa_id']);
+        include 'views/mahasiswa/pelanggaran.php';
+    }
+
+    // public function ajukanBanding($pelanggaranId, $alasan) {
+    //     $this->model->submitAppeal($pelanggaranId, $alasan);
+    //     header('Location: ?controller=mahasiswa&action=lihatPelanggaran');
+    // }
 }
 ?>
