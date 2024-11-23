@@ -3,45 +3,48 @@
 session_start();
 include_once '../core/dbconfig.php';
 
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];  // NIM atau NIP yang nanti akan di cek
-    $password = $_POST['password'];  // Password
 
-    // Cek apakah username adalah NIM atau NIP (misalnya, berdasarkan panjang karakter)
-    if (strlen($username) == 10) {  // Asumsi NIM 10 karakter, sesuaikan jika berbeda
-        // Query untuk mahasiswa
-        $query = "SELECT m.NIM, m.nama_mahasiswa, m.angkatan, p.nama_prodi, k.nama_kelas, s.status_mahasiswa
-                  FROM tbl_mahasiswa m
-                  JOIN tbl_prodi p ON m.id_prodi = p.id_prodi
-                  JOIN tbl_kelas k ON m.id_kelas = k.id_kelas
-                  JOIN tbl_status_mhs s ON m.id_status_mhs = s.id_status_mahasiswa
-                  WHERE m.NIM = :username AND m.password = :password";
-    } else {
-        // Query untuk dosen/DPA/komdis
-        $query = "SELECT p.id_pegawai, p.nama_pegawai, r.nama_role_pegawai
-                  FROM tbl_pegawai p
-                  JOIN tbl_role_pegawai r ON p.id_role_pegawai = r.id_role_pegawai
-                  WHERE p.id_pegawai = :username AND p.password = :password";
-    }
+// Cek apakah pengguna sudah login
+if (isset($_POST['signup'])) {
+    $username = $_POST['username'];
+    // Enkripsi password dengan password_hash()
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    // Persiapkan dan eksekusi query
+    $query = "INSERT INTO tbl_pegawai (username, password) VALUES (:username, :password)";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password);
     $stmt->execute();
 
-    // Cek apakah ada hasil
-    if ($stmt->rowCount() > 0) {
-        // Set session berdasarkan data yang ditemukan
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        $_SESSION['username'] = $username;
-        $_SESSION['role'] = isset($user['nama_role_pegawai']) ? $user['nama_role_pegawai'] : 'mahasiswa';
-        $_SESSION['nama'] = isset($user['nama_mahasiswa']) ? $user['nama_mahasiswa'] : $user['nama_pegawai'];
-
-        header("Location: ../index.php");
-        exit();
-    } else {
-        echo "Username atau password salah.";
-    }
+    $_SESSION['username'] = $username;
+    header("Location: ../views/auth/login.php");
+    exit();
 }
 ?>
+
+<!-- aku mau buat pages Sing Up -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Sign Up</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="Sign_Up.php" method="post">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                            </div>
+                            <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
