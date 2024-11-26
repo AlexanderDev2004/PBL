@@ -36,37 +36,46 @@ if (isset($_POST['signup'])) {
     try {
         global $pdo;
 
-        // Cek apakah username sudah ada
-        $checkQuery = "SELECT username FROM tbl_pegawai WHERE username = :username
-                       UNION 
-                       SELECT nim FROM tbl_kredensial_mahasiswa WHERE nim = :username";
-        $stmt = $pdo->prepare($checkQuery);
-        $stmt->bindParam(':username', $username);
+        // Periksa jika email sudah terdaftar
+        $checkEmailQuery = "SELECT * FROM kredensial_mahasiswa WHERE email = :email UNION SELECT * FROM kredensial_pegawai WHERE email = :email";
+        $stmt = $pdo->prepare($checkEmailQuery);
+        $stmt->bindParam(':email', $email);
         $stmt->execute();
-
+        
         if ($stmt->rowCount() > 0) {
-            echo "Username sudah digunakan!";
+            echo "Email sudah terdaftar!";
             exit();
         }
 
-        // Insert ke tabel yang sesuai
-        if (strlen($username) >= 10 && strlen($username) <= 12) {  // NIM
-            $query = "INSERT INTO tbl_kredensial_mahasiswa (nim, email, password) VALUES (:username, :email, :password)";
-        } else {  // NIP
-            $query = "INSERT INTO tbl_pegawai (id_pegawai, email, password) VALUES (:username, :email, :password)";
+        // Tentukan query berdasarkan panjang username (NIM atau NIP)
+        if (strlen($username) >= 10 && strlen($username) <= 12) { // Asumsi NIM
+            $query = "INSERT INTO kredensial_mahasiswa (nim, email, password) VALUES (:username, :email, :password)";
+        } elseif (strlen($username) == 18) { // Asumsi NIP
+            $query = "INSERT INTO kredensial_pegawai (id_pegawai, email, password) VALUES (:username, :email, :password)";
+        } else {
+            echo "Format NIM/NIP tidak valid.";
+            exit();
         }
 
+        // Eksekusi query
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $hashed_password);
-        $stmt->execute();
 
-        echo "Pendaftaran berhasil! Silakan login.";
-        header("Location: ../index.php");
-        exit();
+        // Eksekusi dan cek apakah berhasil
+        if (!$stmt->execute()) {
+            print_r($stmt->errorInfo());
+            exit();
+        }
+
+        // Redirect setelah berhasil
+        if (!headers_sent()) {
+            header("Location: ../index.php");
+            exit();
+        }
     } catch (PDOException $e) {
-        echo "Terjadi kesalahan: " . htmlspecialchars($e->getMessage());
+        die("Error Database: " . $e->getMessage() . " [" . $e->getCode() . "]");
     }
 }
 ?>

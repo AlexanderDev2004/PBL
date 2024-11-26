@@ -10,23 +10,23 @@ if (isset($_POST['login'])) {
 
     // Validasi input
     if (empty($username) || empty($password)) {
-        echo "Login gagal. Periksa kembali kredensial Anda.";
+        echo "NIM/NIP atau Password tidak boleh kosong.";
         exit();
     }
 
     try {
         // Tentukan query berdasarkan panjang username
-        if (strlen($username) >= 10 && strlen($username) <= 12) {  // Asumsi NIM
+        if (strlen($username) >= 10 && strlen($username) <= 12) { // Asumsi NIM
             $query = "SELECT nim AS username, password, nim AS name, 'mahasiswa' AS role
-                      FROM tbl_kredensial_mahasiswa
+                      FROM kredensial_mahasiswa
                       WHERE nim = :username";
-        } elseif (strlen($username) == 18) {  // Asumsi NIP
-            $query = "SELECT id_pegawai AS username, password, nama_pegawai AS name, nama_role_pegawai AS role
-                      FROM tbl_kredensial_pegawai
-                      JOIN tbl_role_pegawai ON tbl_kredensial_pegawai.id_role_pegawai = tbl_role_pegawai.id_role_pegawai
-                      WHERE id_pegawai = :username";
+        } elseif (strlen($username) == 18) { // Asumsi NIP
+            $query = "SELECT kredensial_pegawai.id_pegawai AS username, password, nama_pegawai AS name, role_pegawai.role_pegawai AS role
+                      FROM kredensial_pegawai
+                      JOIN role_pegawai ON kredensial_pegawai.id_role_pegawai = role_pegawai.id_role_pegawai
+                      WHERE kredensial_pegawai.id_pegawai = :username";
         } else {
-            echo "Login gagal. Periksa kembali kredensial Anda.";
+            echo "Format NIM/NIP tidak valid.";
             exit();
         }
 
@@ -35,12 +35,14 @@ if (isset($_POST['login'])) {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
-        // Cek apakah username ditemukan
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            $hashedPassword = $user['password']; // Hash dari database
 
             // Verifikasi password
-            if (password_verify($password, $user['password'])) {
+            if (password_verify($password, $hashedPassword)) {
+                echo "Login berhasil.";
+                
                 // Set session
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
@@ -58,18 +60,19 @@ if (isset($_POST['login'])) {
                 $redirectUrl = $redirectMap[$user['role']] ?? '/login';
                 header("Location: $redirectUrl");
                 exit();
+            } else {
+                echo "Password salah.";
             }
+        } else {
+            echo "NIM/NIP tidak ditemukan.";
         }
-
-        // Jika login gagal
-        echo "Login gagal. Periksa kembali kredensial Anda.";
     } catch (PDOException $e) {
         echo "Terjadi kesalahan: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
 
-<form method="POST" action="views/components/footer.php">  
+<form method="POST" action="login.php">  
     <h1>Login</h1>
     <input type="text" name="username" placeholder="NIM/NIP" required />
     <input type="password" name="password" placeholder="Password" required />

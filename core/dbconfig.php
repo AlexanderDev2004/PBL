@@ -7,9 +7,9 @@ $databasePassword = '';
 
 // Create database connection
 try {
-    // $dsn = "sqlsrv:Server=$databaseHost;Database=$databaseName";
-    // $pdo = new PDO($dsn, $databaseUsername, $databasePassword);
-    // $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $dsn = "sqlsrv:Server=$databaseHost;Database=$databaseName";
+    $pdo = new PDO($dsn, $databaseUsername, $databasePassword);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // // Query to fetch data
     // $query = "SELECT * FROM pegawai";  
