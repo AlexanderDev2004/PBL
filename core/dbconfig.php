@@ -1,7 +1,7 @@
 <?php
 // Database configuration
 $databaseHost = 'LAPTOP-MHVH0S2R';
-$databaseName = 'db_tatib_v122';
+$databaseName = 'reg_it_v213';
 $databaseUsername = ''; 
 $databasePassword = ''; 
 
@@ -11,16 +11,16 @@ try {
     $pdo = new PDO($dsn, $databaseUsername, $databasePassword);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // // Query to fetch data
-    // $query = "SELECT * FROM tbl_pegawai";  
-    // $stmt = $pdo->prepare($query);
-    // $stmt->execute();
-    // $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Query to fetch data
+    $query = "SELECT * FROM pegawai";  
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-    // // Display the result for testing purposes
-    // echo "<pre>";
-    // print_r($result);
-    // echo "</pre>";
+    // Display the result for testing purposes
+    echo "<pre>";
+    print_r($result);
+    echo "</pre>";
 
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
