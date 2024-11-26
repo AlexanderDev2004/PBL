@@ -1,4 +1,3 @@
-<!-- Auth Login -->
 <?php
 session_start();
 include_once realpath(__DIR__ . '/../../core/dbconfig.php');
@@ -11,82 +10,68 @@ if (isset($_POST['login'])) {
 
     // Validasi input
     if (empty($username) || empty($password)) {
-        echo "Username dan Password harus diisi!";
+        echo "Login gagal. Periksa kembali kredensial Anda.";
         exit();
     }
 
     try {
-        // Tentukan jenis pengguna berdasarkan panjang username
-        if (strlen($username) == 10) {  // NIM
-            $query = "SELECT nim AS username, m.password, nim AS name, 'mahasiswa' AS role
-                      FROM tbl_kredensial_mahasiswa m
-                      WHERE m.NIM = :username";
-        } else {  // Pegawai/Dosen
-            $query = "SELECT p.id_pegawai AS username, p.password, p.nama_pegawai AS name, r.nama_role_pegawai AS role
-                      FROM tbl_kredensial_pegawai p
-                      JOIN tbl_role_pegawai r ON p.id_role_pegawai = r.id_role_pegawai
-                      WHERE p.id_pegawai = :username";
+        // Tentukan query berdasarkan panjang username
+        if (strlen($username) >= 10 && strlen($username) <= 12) {  // Asumsi NIM
+            $query = "SELECT nim AS username, password, nim AS name, 'mahasiswa' AS role
+                      FROM tbl_kredensial_mahasiswa
+                      WHERE nim = :username";
+        } elseif (strlen($username) == 18) {  // Asumsi NIP
+            $query = "SELECT id_pegawai AS username, password, nama_pegawai AS name, nama_role_pegawai AS role
+                      FROM tbl_kredensial_pegawai
+                      JOIN tbl_role_pegawai ON tbl_kredensial_pegawai.id_role_pegawai = tbl_role_pegawai.id_role_pegawai
+                      WHERE id_pegawai = :username";
+        } else {
+            echo "Login gagal. Periksa kembali kredensial Anda.";
+            exit();
         }
 
+        // Eksekusi query
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
+        // Cek apakah username ditemukan
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             // Verifikasi password
             if (password_verify($password, $user['password'])) {
+                // Set session
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['name'] = $user['name'];
 
-                switch ($user['role']) {
-                    case 'mahasiswa':
-                        header("Location: ../views/pages/dasbords/mhs_dasbord.php");
-                        break;
-                    case 'dosen':
-                    case 'dpa':
-                    case 'komdis':
-                    case 'admin':
-                        header("Location: ../views/pages/dasbords/pegawai_dasbord.php");
-                        break;
-                }
+                // Redirect sesuai role
+                $redirectMap = [
+                    'mahasiswa' => '../views/pages/dasbords/mhs_dasbord.php',
+                    'dosen' => '../views/pages/dasbords/pegawai_dasbord.php',
+                    'dpa' => '../views/pages/dasbords/pegawai_dasbord.php',
+                    'komdis' => '../views/pages/dasbords/pegawai_dasbord.php',
+                    'admin' => '../views/pages/dasbords/pegawai_dasbord.php',
+                ];
+
+                $redirectUrl = $redirectMap[$user['role']] ?? '/login';
+                header("Location: $redirectUrl");
                 exit();
-            } else {
-                echo "Password salah!";
             }
-        } else {
-            echo "Username tidak ditemukan!";
         }
+
+        // Jika login gagal
+        echo "Login gagal. Periksa kembali kredensial Anda.";
     } catch (PDOException $e) {
-        echo "Terjadi kesalahan: " . $e->getMessage();
+        echo "Terjadi kesalahan: " . htmlspecialchars($e->getMessage());
     }
 }
 ?>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Login</h3>
-                </div>
-                <div class="card-body">
-                    <form action="login.php" method="post">
-                        <div class="form-group">
-                            <label for="username">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" placeholder="NIM/NIP" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                        </div>
-                        <button type="submit" name="login" class="btn btn-primary">Login</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<form method="POST" action="views/components/footer.php">  
+    <h1>Login</h1>
+    <input type="text" name="username" placeholder="NIM/NIP" required />
+    <input type="password" name="password" placeholder="Password" required />
+    <button type="submit" name="login">Login</button>
+</form>
