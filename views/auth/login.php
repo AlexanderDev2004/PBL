@@ -21,10 +21,10 @@ if (isset($_POST['login'])) {
                       FROM kredensial_mahasiswa
                       WHERE nim = :username";
         } elseif (strlen($username) == 18) { // Asumsi NIP
-            $query = "SELECT kredensial_pegawai.id_pegawai AS username, password, nama_pegawai AS name, role_pegawai.role_pegawai AS role
-                      FROM kredensial_pegawai
-                      JOIN role_pegawai ON kredensial_pegawai.id_role_pegawai = role_pegawai.id_role_pegawai
-                      WHERE kredensial_pegawai.id_pegawai = :username";
+            $query = "SELECT kp.id_pegawai AS username, kp.password, rp.role_pegawai AS role, rp.role_pegawai AS name
+                      FROM kredensial_pegawai kp
+                      JOIN role_pegawai rp ON kp.id_role_pegawai = rp.id_role_pegawai
+                      WHERE kp.id_pegawai = :username";
         } else {
             echo "Format NIM/NIP tidak valid.";
             exit();
@@ -41,8 +41,6 @@ if (isset($_POST['login'])) {
 
             // Verifikasi password
             if (password_verify($password, $hashedPassword)) {
-                echo "Login berhasil.";
-                
                 // Set session
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['role'] = $user['role'];
@@ -72,6 +70,7 @@ if (isset($_POST['login'])) {
 }
 ?>
 
+<!-- Form Login -->
 <form method="POST" action="login.php">  
     <h1>Login</h1>
     <input type="text" name="username" placeholder="NIM/NIP" required />

@@ -36,12 +36,20 @@ if (isset($_POST['signup'])) {
     try {
         global $pdo;
 
+        // Periksa koneksi database
+        if (!$pdo) {
+            die("Koneksi database gagal!");
+        }
+
+        // Debugging koneksi
+        echo "Koneksi berhasil!<br>";
+
         // Periksa jika email sudah terdaftar
         $checkEmailQuery = "SELECT * FROM kredensial_mahasiswa WHERE email = :email UNION SELECT * FROM kredensial_pegawai WHERE email = :email";
         $stmt = $pdo->prepare($checkEmailQuery);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
-        
+
         if ($stmt->rowCount() > 0) {
             echo "Email sudah terdaftar!";
             exit();
@@ -57,6 +65,9 @@ if (isset($_POST['signup'])) {
             exit();
         }
 
+        // Debugging query
+        echo "Query yang dieksekusi: $query<br>";
+
         // Eksekusi query
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':username', $username);
@@ -65,6 +76,7 @@ if (isset($_POST['signup'])) {
 
         // Eksekusi dan cek apakah berhasil
         if (!$stmt->execute()) {
+            echo "Kesalahan saat menyimpan data:<br>";
             print_r($stmt->errorInfo());
             exit();
         }
@@ -81,11 +93,12 @@ if (isset($_POST['signup'])) {
 ?>
 
 <!-- Form HTML -->
-<form method="POST" action="/register">
+<form method="POST" action="">
     <h1>Register</h1>
     <input type="text" name="username" placeholder="NIM/NIP" required />
     <input type="email" name="email" placeholder="Email" required />
     <input type="password" name="password" placeholder="Password" required />
     <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+    <input type="file" name="image" id="id_image" accept="image/*" required />
     <button type="submit" name="signup">Register</button>
 </form>
