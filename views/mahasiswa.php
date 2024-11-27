@@ -68,6 +68,13 @@
         <!-- Dashboard -->
         <div id="Dashboard" class="flex-1 flex items-start justify-center pt-8">
             <p class="font-bold text-3xl text-center text-indigo-950 ">Tata Tertib Kehidupan Kampus</p>
+            </div>
+            <div class="bg-grey-500 h-screen flex justify-center items-center">
+                <div class="border-2 bg-grey-200">
+
+                </div>
+            </div>
+
         </div>
     </div>
 </body>
