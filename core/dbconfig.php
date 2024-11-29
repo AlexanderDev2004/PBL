@@ -29,8 +29,8 @@
 // }
 
 // Connect to SQL Server
-$serverName = "KHIP01\SQLEXPRESS"; //serverName\instanceName
-$connectionInfo = array("Database" => "reg_it");
+$serverName = "LAPTOP-MHVH0S2R"; //serverName\instanceName
+$connectionInfo = array("Database" => "reg_it_v213");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 if ($conn) {
