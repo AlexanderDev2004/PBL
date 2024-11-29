@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Periksa dan masukkan file konfigurasi database
 if (!file_exists(realpath(__DIR__ . '/../../core/dbconfig.php'))) {
     die("File konfigurasi database tidak ditemukan!");
 }
@@ -12,6 +11,7 @@ if (isset($_POST['signup'])) {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    // $id_image = $_POST['id_image'];
 
     // Validasi input
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
@@ -24,81 +24,75 @@ if (isset($_POST['signup'])) {
         exit();
     }
 
-    // Validasi panjang username (NIM atau NIP)
     if (!(strlen($username) >= 10 && strlen($username) <= 18)) {
         echo "Username harus berupa NIM (10-12 karakter) atau NIP (18 karakter)!";
         exit();
     }
 
-    // Hash password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    try {
-        global $pdo;
+    // Validasi gambar
+    if (isset($_FILES['id_image']) && $_FILES['id_image']['error'] === UPLOAD_ERR_OK) {
+        $FileName = $_FILES['id_image']['name']; // Nama file
+        $FileTmp = $_FILES['id_image']['tmp_name']; // Path file sementara
+        $ImageData = file_get_contents($FileTmp); // Data binary file
+    } else {
+        echo "Gagal mengunggah file gambar!";
+        exit();
+    }
 
-        // Periksa koneksi database
-        if (!$pdo) {
-            die("Koneksi database gagal!");
+    var_dump($_POST, $_FILES, $FileName, $FileTmp);
+
+
+    try {
+        // Periksa jika email sudah terdaftar
+        $checkEmailQuery = "SELECT * FROM kredensial_mahasiswa WHERE email = ? UNION SELECT * FROM kredensial_pegawai WHERE email = ?";
+        $stmt = sqlsrv_query($conn, $checkEmailQuery, array($email, $email));
+
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
         }
 
-        // Debugging koneksi
-        echo "Koneksi berhasil!<br>";
-
-        // Periksa jika email sudah terdaftar
-        $checkEmailQuery = "SELECT * FROM kredensial_mahasiswa WHERE email = :email UNION SELECT * FROM kredensial_pegawai WHERE email = :email";
-        $stmt = $pdo->prepare($checkEmailQuery);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
+        if (sqlsrv_has_rows($stmt)) {
             echo "Email sudah terdaftar!";
             exit();
         }
 
-        // Tentukan query berdasarkan panjang username (NIM atau NIP)
-        if (strlen($username) >= 10 && strlen($username) <= 12) { // Asumsi NIM
-            $query = "INSERT INTO kredensial_mahasiswa (nim, email, password) VALUES (:username, :email, :password)";
-        } elseif (strlen($username) == 18) { // Asumsi NIP
-            $query = "INSERT INTO kredensial_pegawai (id_pegawai, email, password) VALUES (:username, :email, :password)";
+        // Tentukan tabel berdasarkan panjang username
+        if (strlen($username) >= 10 && strlen($username) <= 12) {
+            // $sql = "INSERT INTO kredensial_mahasiswa (nim, email, password) VALUES (?, ?, ?)";
+            $sql = "EXEC GetRegisterMahasiswa @Nim = ?, @Email = ?, @Password = ?, @FileName = ?, @ImageData = ?";
+        } elseif (strlen($username) == 18) {
+            // $sql = "INSERT INTO kredensial_pegawai (id_pegawai, email, password) VALUES (?, ?, ?)";
+            $sql = "EXEC GetRegisterPegawai @IdPegawai = ?, @Email = ?, @Password = ?, @FileName = ?, @ImageData = ?";
         } else {
             echo "Format NIM/NIP tidak valid.";
             exit();
         }
 
-        // Debugging query
-        echo "Query yang dieksekusi: $query<br>";
-
         // Eksekusi query
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashed_password);
+        $params = array($username, $email, $hashed_password, $FileName, $ImageData);
+        $stmt = sqlsrv_query($conn, $sql, $params);
 
-        // Eksekusi dan cek apakah berhasil
-        if (!$stmt->execute()) {
-            echo "Kesalahan saat menyimpan data:<br>";
-            print_r($stmt->errorInfo());
-            exit();
+        echo "TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT\n" . $stmt['result'];
+        if ($stmt === false) {
+            die(print_r(sqlsrv_errors(), true));
         }
 
-        // Redirect setelah berhasil
-        if (!headers_sent()) {
-            header("Location: ../index.php");
-            exit();
-        }
-    } catch (PDOException $e) {
-        die("Error Database: " . $e->getMessage() . " [" . $e->getCode() . "]");
+        header("Location: ../index.php");
+        exit();
+    } catch (Exception $e) {
+        die("Error Database: " . $e->getMessage());
     }
 }
 ?>
 
-<!-- Form HTML -->
-<form method="POST" action="">
+<form method="POST" enctype="multipart/form-data">
     <h1>Register</h1>
     <input type="text" name="username" placeholder="NIM/NIP" required />
     <input type="email" name="email" placeholder="Email" required />
     <input type="password" name="password" placeholder="Password" required />
     <input type="password" name="confirm_password" placeholder="Confirm Password" required />
-    <input type="file" name="image" id="id_image" accept="image/*" required />
+    <input type="file" name="id_image" id="id_image" accept="image/*" required />
     <button type="submit" name="signup">Register</button>
 </form>
