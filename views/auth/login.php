@@ -70,24 +70,21 @@ if (isset($_POST['login'])) {
     // }
 
     // TEST 
-    var_dump($username);
-    var_dump($password);
+    // var_dump($username);
+    // var_dump($password);
 
-    $sql = "SELECT nim AS username, password, nim AS name, 'mahasiswa' AS role
-            FROM kredensial_mahasiswa
-            WHERE nim = ?";
-    $params = array($username);
+    // Hash password
+    $hashedPassword = hash('sha256', $password);
+
+    $sql = "EXEC GetLoginMahasiswa @Nim = ?, @Password = ?";
+    $params = array($username, $hashedPassword);
 
     $stmt = sqlsrv_query($conn, $sql, $params);
     if( $stmt === false ) {
         die( print_r( sqlsrv_errors(), true));
     } else {
         $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-        if ($row) {
-            echo "DATA: {$row['username']} - {$row['password']}}}";
-        } else {
-            echo "Login gagal";
-        }
+        echo "RESULT DATA: {$row['response']}";
     }
 }
 ?>
