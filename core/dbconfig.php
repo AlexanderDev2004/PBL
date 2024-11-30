@@ -30,7 +30,7 @@
 
 // Connect to SQL Server
 $serverName = "LAPTOP-MHVH0S2R"; //serverName\instanceName
-$connectionInfo = array("Database" => "reg_it_v216");
+$connectionInfo = array("Database" => "reg_it_v2118");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 if ($conn) {

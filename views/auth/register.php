@@ -79,7 +79,7 @@ if (isset($_POST['signup'])) {
             die(print_r(sqlsrv_errors(), true));
         }
 
-        header("Location: ../index.php");
+        header("Location: ../views/index.php");
         exit();
     } catch (Exception $e) {
         die("Error Database: " . $e->getMessage());
