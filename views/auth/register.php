@@ -11,7 +11,7 @@ if (isset($_POST['signup'])) {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    // $id_image = $_POST['id_image'];
+    $id_image = $_POST['id_image'];
 
     // Validasi input
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
