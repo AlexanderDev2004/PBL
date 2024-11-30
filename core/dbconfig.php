@@ -29,7 +29,7 @@
 // }
 
 // Connect to SQL Server
-$serverName = "IDP3I-ICA"; //serverName\instanceName
+$serverName = "LAPTOP-MHVH0S2R"; //serverName\instanceName
 $connectionInfo = array("Database" => "reg_it_v216");
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
