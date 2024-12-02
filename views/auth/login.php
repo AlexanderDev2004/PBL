@@ -6,90 +6,69 @@ include_once realpath(__DIR__ . '/../../core/dbconfig.php');
 global $conn;
 
 if (isset($_POST['login'])) {
-    $username = trim($_POST['username']);
+    $username = htmlspecialchars(trim($_POST['username']));
     $password = $_POST['password'];
 
-    // Validasi input
-    // if (empty($username) || empty($password)) {
-    //     echo "NIM/NIP atau Password tidak boleh kosong.";
-    //     exit();
-    // }
-
-    // try {
-    //     // Tentukan query berdasarkan panjang username
-    //     if (strlen($username) >= 10 && strlen($username) <= 12) { // Asumsi NIM
-    //         $query = "SELECT nim AS username, password, nim AS name, 'mahasiswa' AS role
-    //                   FROM kredensial_mahasiswa
-    //                   WHERE nim = :username";
-    //     } elseif (strlen($username) == 18) { // Asumsi NIP
-    //         $query = "SELECT kp.id_pegawai AS username, kp.password, rp.role_pegawai AS role, rp.role_pegawai AS name
-    //                   FROM kredensial_pegawai kp
-    //                   JOIN role_pegawai rp ON kp.id_role_pegawai = rp.id_role_pegawai
-    //                   WHERE kp.id_pegawai = :username";
-    //     } else {
-    //         echo "Format NIM/NIP tidak valid.";
-    //         exit();
-    //     }
-
-    //     // Eksekusi query
-    //     $stmt = $pdo->prepare($query);
-    //     $stmt->bindParam(':username', $username);
-    //     $stmt->execute();
-
-    //     if ($stmt->rowCount() > 0) {
-    //         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    //         $hashedPassword = $user['password']; // Hash dari database
-
-    //         // Verifikasi password
-    //         if (password_verify($password, $hashedPassword)) {
-    //             // Set session
-    //             $_SESSION['username'] = $user['username'];
-    //             $_SESSION['role'] = $user['role'];
-    //             $_SESSION['name'] = $user['name'];
-
-    //             // Redirect sesuai role
-    //             $redirectMap = [
-    //                 'mahasiswa' => '../views/pages/dasbords/mhs_dasbord.php',
-    //                 'dosen' => '../views/pages/dasbords/pegawai_dasbord.php',
-    //                 'dpa' => '../views/pages/dasbords/pegawai_dasbord.php',
-    //                 'komdis' => '../views/pages/dasbords/pegawai_dasbord.php',
-    //                 'admin' => '../views/pages/dasbords/pegawai_dasbord.php',
-    //             ];
-
-    //             $redirectUrl = $redirectMap[$user['role']] ?? '/login';
-    //             header("Location: $redirectUrl");
-    //             exit();
-    //         } else {
-    //             echo "Password salah.";
-    //         }
-    //     } else {
-    //         echo "NIM/NIP tidak ditemukan.";
-    //     }
-    // } catch (PDOException $e) {
-    //     echo "Terjadi kesalahan: " . htmlspecialchars($e->getMessage());
-    // }
-
-    // TEST 
-    // var_dump($username);
-    // var_dump($password);
-
     // Hash password
-    $hashedPassword = hash('sha256', $password);
+    $hashedPassword = hash('sha256', $password); // Gunakan password_hash saat produksi
 
-    $sql = "EXEC GetLoginMahasiswa @Nim = ?, @Password = ?";
-    $params = array($username, $hashedPassword);
+    // Cek login mahasiswa
+    $sqlMahasiswa = "EXEC GetLoginMahasiswa @Nim = ?, @Password = ?";
+    $stmtMahasiswa = sqlsrv_prepare($conn, $sqlMahasiswa, array($username, $hashedPassword));
 
-    $stmt = sqlsrv_query($conn, $sql, $params);
-    if( $stmt === false ) {
-        die( print_r( sqlsrv_errors(), true));
-    } else {
-        $row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
-        echo "RESULT DATA: {$row['response']}";
+    if ($stmtMahasiswa && sqlsrv_execute($stmtMahasiswa)) {
+        $resultMahasiswa = sqlsrv_fetch_array($stmtMahasiswa, SQLSRV_FETCH_ASSOC);
+
+        if ($resultMahasiswa) {
+            $_SESSION['user_id'] = $resultMahasiswa['Nim'];
+            $_SESSION['role'] = 'mahasiswa';
+            header("Location: ../dashboard/mahasiswa.php");
+            exit();
+        }
     }
+
+    // Cek login pegawai
+    $sqlPegawai = "EXEC GetLoginPegawai @Nip = ?, @Password = ?";
+    $stmtPegawai = sqlsrv_prepare($conn, $sqlPegawai, array($username, $hashedPassword));
+
+    if ($stmtPegawai && sqlsrv_execute($stmtPegawai)) {
+        $resultPegawai = sqlsrv_fetch_array($stmtPegawai, SQLSRV_FETCH_ASSOC);
+
+        if ($resultPegawai) {
+            $_SESSION['user_id'] = $resultPegawai['Nip'];
+            $_SESSION['role'] = $resultPegawai['Role'];
+
+            // Redirect berdasarkan role
+            switch ($resultPegawai['Role']) {
+                case 'dosen':
+                    header("Location: ../dashboard/dosen.php");
+                    break;
+                case 'dpa':
+                    header("Location: ../dashboard/dpa.php");
+                    break;
+                case 'komdis':
+                    header("Location: ../dashboard/komdis.php");
+                    break;
+                case 'admin':
+                    header("Location: ../dashboard/admin.php");
+                    break;
+            }
+            exit();
+        }
+    }
+
+    // Jika login gagal
+    $_SESSION['error'] = "Maaf NIM/NIP atau Password anda salah";
+    header("Location: login.php");
+    exit();
 }
 ?>
 
 <!-- Form Login -->
+<?php if (isset($_SESSION['error'])): ?>
+    <p style="color: red;"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
+<?php endif; ?>
+
 <form method="POST" action="login.php">  
     <h1>Login</h1>
     <input type="text" name="username" placeholder="NIM/NIP" required />
