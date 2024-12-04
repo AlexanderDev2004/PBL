@@ -44,7 +44,7 @@ if (isset($_POST['login'])) {
             // Redirect berdasarkan role
             switch (getRolePegawai($username)) {
                 case 'Dosen':
-                    header("Location: ../dashboard/dosen.php");
+                    header("Location: ../dashboard/Dosen/dosen.php");
                     break;
                 case 'DPA':
                     header("Location: ../dashboard/dpa.php");

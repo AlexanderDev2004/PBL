@@ -1,35 +1,17 @@
 <?php
-
 class PelanggaranModel {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getConnection();
+        $this->db = new Database;
     }
 
     public function getPelanggaranPerBulan() {
-        $query = "SELECT MONTH(TanggalPelaporan) AS Bulan, COUNT(*) AS JumlahPelanggaran
-                  FROM DataPelanggaran
-                  GROUP BY MONTH(TanggalPelaporan)
-                  ORDER BY MONTH(TanggalPelaporan)";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $query = "SELECT MONTH(tanggal) as bulan, COUNT(*) as jumlah 
+                 FROM pelanggaran 
+                 GROUP BY MONTH(tanggal) 
+                 ORDER BY MONTH(tanggal)";
+        $this->db->query($query);
+        return $this->db->resultSet();
     }
-
-    public function tambahPelanggaran($data) {
-        $query = "INSERT INTO DataPelanggaran (Nim, TanggalPelaporan, Pelanggaran, Bukti)
-                  VALUES (:nim, :tanggal, :pelanggaran, :bukti)";
-        $stmt = $this->db->prepare($query);
-        return $stmt->execute($data);
-    }
-
-    public function getSemuaPelanggaran() {
-        $query = "SELECT p.Nim, m.Nama, p.TanggalPelaporan, p.Pelanggaran, p.Bukti
-                  FROM DataPelanggaran p
-                  JOIN Mahasiswa m ON p.Nim = m.Nim";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-}
+} 
