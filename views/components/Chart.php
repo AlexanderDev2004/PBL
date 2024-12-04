@@ -1,7 +1,7 @@
 <!-- Graph -->
-<div class="mx-auto rounded-md shadow-md p-4 flex justify-center items-center max-w-5xl bg-white mr-32">
+<div class="mx-auto rounded-md shadow-md p-4 flex-col justify-center items-center max-w-screen-xl bg-white mt-10">
         <div class="">
-            <canvas id="myChart" class="mx-auto mb-14 h-[410px] mb-6 flex rounded"></canvas>
+            <canvas id="myChart" class="mx-auto mb-14 h-[600px] mb-6 flex rounded"></canvas>
         </div>
     </div>    
 
@@ -16,7 +16,8 @@
                 datasets: [{
                     label: 'Jumlah Pelanggaran',
                     data: [12, 19, 3, 5, 2, 3, 7, 8, 9, 10, 11, 12],
-                    borderWidth: 1, 
+                    borderWidth: 1,
+                      
                 }]
             },
             options: {

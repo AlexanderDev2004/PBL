@@ -42,12 +42,14 @@
     <!-- Content End -->
 
     <!-- Profile -->
-    <div class="bg-white p-6 rounded-lg shadow-md w-11/12 lg:w-3/4 ml-80">
-        <!-- Edit Button -->
-        <a href="UbahPassword.php" class="absolute w-48 bg-[#132145] text-white py-2 px-4 right-24 rounded-md hover:bg-blue-700 flex items-center">
-            <i class="fa-solid fa-pen pl-0"></i>
+    <div class="bg-white p-6 rounded-lg shadow-md w-full lg:w-3/4 ml-80 mt-14">
+        <!-- Edit Password -->
+        <div class="flex flex-end justify-end">
+            <a href="ubahPassword.php" class="w-48 bg-[#132145] text-white py-2 px-4 rounded-md hover:bg-blue-700 flex items-center">
+            <i class="fa-solid fa-pen pl-0 pr-2"></i>
             <span class="pl-2">Ubah Password</span>
-        </a>
+            </a>
+        </div>
         <!-- Edit Button End -->
         <div class="overflow-x-auto grid grid-cols-2 gap-x-0 gap-y-8">
             <div>
@@ -77,7 +79,7 @@
 
             <!-- Logout Button -->
             <div class="flex mt-6 ">                
-            <a href="../signUpPage.php" class="flex flex-row bg-red-500 w-28 text-white py-2  rounded-md hover:bg-red-600 px-auto">
+            <a href="../loginPage.php" class="flex flex-row bg-red-500 w-28 text-white py-2  rounded-md hover:bg-red-600 px-auto">
             <img src="../../public/logout.svg" alt="" class="ml-2">
                 <span class="ml-4">Keluar</span>
             </a>
