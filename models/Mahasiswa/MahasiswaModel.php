@@ -4,14 +4,16 @@ class MahasiswaModel {
     private $db;
 
     public function __construct() {
-        $this->db = Database::getConnection();
+        $this->db = new Database;
     }
 
     public function getMahasiswaByNIM($nim) {
-        $query = "SELECT Nama, Prodi, Angkatan, Kelas FROM Mahasiswa WHERE Nim = :nim";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':nim', $nim);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $this->db->query('SELECT m.*, p.nama_prodi, k.nama_kelas 
+                         FROM mahasiswa m 
+                         LEFT JOIN prodi p ON m.id_prodi = p.id 
+                         LEFT JOIN kelas k ON m.id_kelas = k.id 
+                         WHERE m.nim = :nim');
+        $this->db->bind('nim', $nim);
+        return $this->db->single();
     }
-}
+} 
