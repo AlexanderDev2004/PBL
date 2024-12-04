@@ -19,37 +19,40 @@ if (isset($_POST['login'])) {
     if ($stmtMahasiswa && sqlsrv_execute($stmtMahasiswa)) {
         $resultMahasiswa = sqlsrv_fetch_array($stmtMahasiswa, SQLSRV_FETCH_ASSOC);
 
-        if ($resultMahasiswa) {
-            $_SESSION['user_id'] = $resultMahasiswa['Nim'];
-            $_SESSION['role'] = 'mahasiswa';
+        $resultMahasiswa['response'] = filter_var($resultMahasiswa['response'], FILTER_VALIDATE_BOOLEAN);
+
+        if ($resultMahasiswa['response']) {
+            $_SESSION['user_id'] = $_POST['username'];
+
             header("Location: ../dashboard/mahasiswa.php");
             exit();
         }
     }
 
     // Cek login pegawai
-    $sqlPegawai = "EXEC GetLoginPegawai @Nip = ?, @Password = ?";
+    $sqlPegawai = "EXEC GetLoginPegawai @IdPegawai = ?, @Password = ?";
     $stmtPegawai = sqlsrv_prepare($conn, $sqlPegawai, array($username, $hashedPassword));
 
     if ($stmtPegawai && sqlsrv_execute($stmtPegawai)) {
         $resultPegawai = sqlsrv_fetch_array($stmtPegawai, SQLSRV_FETCH_ASSOC);
 
-        if ($resultPegawai) {
-            $_SESSION['user_id'] = $resultPegawai['Nip'];
-            $_SESSION['role'] = $resultPegawai['Role'];
+        $resultPegawai['response'] = filter_var($resultPegawai['response'], FILTER_VALIDATE_BOOLEAN);
+
+        if ($resultPegawai['response']) {
+            $_SESSION['user_id'] = $_POST['username'];
 
             // Redirect berdasarkan role
-            switch ($resultPegawai['Role']) {
-                case 'dosen':
+            switch (getRolePegawai($username)) {
+                case 'Dosen':
                     header("Location: ../dashboard/dosen.php");
                     break;
-                case 'dpa':
+                case 'DPA':
                     header("Location: ../dashboard/dpa.php");
                     break;
-                case 'komdis':
+                case 'Komisi Disiplin':
                     header("Location: ../dashboard/komdis.php");
                     break;
-                case 'admin':
+                case 'Administrator':
                     header("Location: ../dashboard/admin.php");
                     break;
             }
@@ -62,6 +65,21 @@ if (isset($_POST['login'])) {
     header("Location: login.php");
     exit();
 }
+
+function getRolePegawai($IdPegawai) {
+    global $conn;
+
+    $sql = "SELECT rp.role_pegawai 
+	            FROM pegawai AS p
+	            INNER JOIN role_pegawai AS rp ON p.id_role_pegawai = rp.id_role_pegawai
+	            WHERE p.id_pegawai = ?";
+    $stmt = sqlsrv_prepare($conn, $sql, array($IdPegawai));
+    if ($stmt && sqlsrv_execute($stmt)) {
+        $result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC);
+        return $result['role_pegawai'];
+    }
+}
+
 ?>
 
 <!-- Form Login -->
