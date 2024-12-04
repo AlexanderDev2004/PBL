@@ -47,13 +47,13 @@ if (isset($_POST['login'])) {
                     header("Location: ../dashboard/Dosen/dosen.php");
                     break;
                 case 'DPA':
-                    header("Location: ../dashboard/dpa.php");
+                    header("Location: ../dashboard/Dpa/dpa.php");
                     break;
                 case 'Komisi Disiplin':
-                    header("Location: ../dashboard/komdis.php");
+                    header("Location: ../dashboard/Komdis/komdis.php");
                     break;
                 case 'Administrator':
-                    header("Location: ../dashboard/admin.php");
+                    header("Location: ../dashboard/Admin/admin.php");
                     break;
             }
             exit();
