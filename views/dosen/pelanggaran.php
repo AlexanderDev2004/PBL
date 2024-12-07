@@ -80,31 +80,31 @@
       <!-- Table Start -->
       <div class="bg-white p-8 rounded-lg shadow-md w-11/12 lg:w-3/4 ml-80 mt-10">
         <div class="overflow-x-auto">
-            <table class="w-full border-collapse border border-blue-200 text-sm text-left">
-                <thead class="bg-white text-gray-800">
+            <table class="w-full border-collapse border border-[#132145] text-sm text-left ">
+                <thead class="bg-white text-gray-800 rounded-lg">
                     <tr>
-                        <th class="border border-blue-200 px-4 py-2">No</th>
-                        <th class="border border-blue-200 px-4 py-2 w-1/4">Nama Mahasiswa</th>
-                        <th class="border border-blue-200 px-4 py-2">Tanggal Pelanggaran</th>
-                        <th class="border border-blue-200 px-4 py-2">Deskripsi Pelanggaran</th>
-                        <th class="border border-blue-200 px-4 py-2">Tingkat</th>
-                        <th class="border border-blue-200 px-4 py-2">Sanksi</th>
-                        <th class="border border-blue-200 px-4 py-2">Tanggal Sanksi</th>
-                        <th class="border border-blue-200 px-4 py-2">Status Pelanggaran</th>
-                        <th class="border border-blue-200 px-4 py-2">Lainnya</th>
+                        <th class="border border-[#132145] px-4 py-2">No</th>
+                        <th class="border border-[#132145] px-4 py-2 w-1/4">Nama Mahasiswa</th>
+                        <th class="border border-[#132145] px-4 py-2">Tanggal Pelanggaran</th>
+                        <th class="border border-[#132145] px-4 py-2">Deskripsi Pelanggaran</th>
+                        <th class="border border-[#132145] px-4 py-2">Tingkat</th>
+                        <th class="border border-[#132145] px-4 py-2">Sanksi</th>
+                        <th class="border border-[#132145] px-4 py-2">Tanggal Sanksi</th>
+                        <th class="border border-[#132145] px-4 py-2">Status Pelanggaran</th>
+                        <th class="border border-[#132145] px-4 py-2">Lainnya</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="bg-white">
-                        <td class="border border-blue-200 px-4 py-2 text-center">1</td>
-                        <td class="border border-blue-200 px-4 py-2">FIERA ZIADATTUN NISA'</td>
-                        <td class="border border-blue-200 px-4 py-2">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2">Berk komunikasi dengan tidak sopan kepada mahasiswa, dosen, atau karyawan</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">V</td>
-                        <td class="border border-blue-200 px-4 py-2">Teguran lisan disertai surat pernyataan bermaterai yang ditandatangani mahasiswa dan DPA</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">Selesai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">
+                        <td class="border border-[#132145] px-4 py-2 text-center">1</td>
+                        <td class="border border-[#132145] px-4 py-2">FIERA ZIADATTUN NISA'</td>
+                        <td class="border border-[#132145] px-4 py-2">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2">Berk komunikasi dengan tidak sopan kepada mahasiswa, dosen, atau karyawan</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">V</td>
+                        <td class="border border-[#132145] px-4 py-2">Teguran lisan disertai surat pernyataan bermaterai yang ditandatangani mahasiswa dan DPA</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">Selesai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">
                             <button type="button" onclick="window.location.href='detailPelanggaran.php'" 
                                 class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <!-- <a href="/views/dosen/detailPelanggaran.php" class="flex flex-row"> -->
@@ -115,15 +115,15 @@
                         </td>
                     </tr>
                     <tr class="bg-[#F9FAFB]">
-                        <td class="border border-blue-200 px-4 py-2 text-center">2</td>
-                        <td class="border border-blue-200 px-4 py-2">FIERA ZIADATTUN NISA'</td>
-                        <td class="border border-blue-200 px-4 py-2">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2">Berbusana tidak sopan dan tidak rapi (misalnya memakai kaos tidak berkerah, rok mini, sandal, dll)</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">IV</td>
-                        <td class="border border-blue-200 px-4 py-2">Teguran tertulis, pemanggilan orang tua/wali, serta surat pernyataan tidak mengulangi bermaterai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">-</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">
+                        <td class="border border-[#132145] px-4 py-2 text-center">2</td>
+                        <td class="border border-[#132145] px-4 py-2">FIERA ZIADATTUN NISA'</td>
+                        <td class="border border-[#132145] px-4 py-2">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2">Berbusana tidak sopan dan tidak rapi (misalnya memakai kaos tidak berkerah, rok mini, sandal, dll)</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">IV</td>
+                        <td class="border border-[#132145] px-4 py-2">Teguran tertulis, pemanggilan orang tua/wali, serta surat pernyataan tidak mengulangi bermaterai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">-</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">
                             <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <img src="../../Public/Details.svg" alt="" class="">
                                     <span class="ml-2">Detail</span>
@@ -131,15 +131,15 @@
                         </td>
                     </tr>
                     <tr class="bg-white">
-                        <td class="border border-blue-200 px-4 py-2 text-center">3</td>
-                        <td class="border border-blue-200 px-4 py-2">AKHAMAD AAKHIF ATHALAH</td>
-                        <td class="border border-blue-200 px-4 py-2">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2">Tidak menjaga kebersihan di seluruh area Polinema</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">III</td>
-                        <td class="border border-blue-200 px-4 py-2">Surat pernyataan, tugas khusus seperti membersihkan area tertentu</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">Selesai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">
+                        <td class="border border-[#132145] px-4 py-2 text-center">3</td>
+                        <td class="border border-[#132145] px-4 py-2">AKHAMAD AAKHIF ATHALAH</td>
+                        <td class="border border-[#132145] px-4 py-2">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2">Tidak menjaga kebersihan di seluruh area Polinema</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">III</td>
+                        <td class="border border-[#132145] px-4 py-2">Surat pernyataan, tugas khusus seperti membersihkan area tertentu</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">Selesai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">
                             <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <img src="../../Public/Details.svg" alt="" class="">
                                     <span class="ml-2">Detail</span>
@@ -147,15 +147,15 @@
                         </td>
                     </tr>
                     <tr class="bg-[#F9FAFB]">
-                        <td class="border border-blue-200 px-4 py-2 text-center">4</td>
-                        <td class="border border-blue-200 px-4 py-2">IRSA</td>
-                        <td class="border border-blue-200 px-4 py-2">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2">Mengakses materi pornografi di kelas atau area kampus</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">I</td>
-                        <td class="border border-blue-200 px-4 py-2">Penggantian kerugian dan tugas layanan sosial</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">-</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">
+                        <td class="border border-[#132145] px-4 py-2 text-center">4</td>
+                        <td class="border border-[#132145] px-4 py-2">IRSA</td>
+                        <td class="border border-[#132145] px-4 py-2">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2">Mengakses materi pornografi di kelas atau area kampus</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">I</td>
+                        <td class="border border-[#132145] px-4 py-2">Penggantian kerugian dan tugas layanan sosial</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">-</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">
                             <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <img src="../../Public/Details.svg" alt="" class="">
                                     <span class="ml-2">Detail</span>
@@ -163,15 +163,15 @@
                         </td>
                     </tr>
                     <tr class="bg-[#F9FAFB]">
-                        <td class="border border-blue-200 px-4 py-2">5</td>
-                        <td class="border border-blue-200 px-4 py-2">IRSA</td>
-                        <td class="border border-blue-200 px-4 py-2">12-11-2024</td>
-                        <td class="border border-blue-200 px-4 py-2">Terlibat dalam tindak kriminal dan dinyatakan bersalah oleh pengadilan</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">I</td>
-                        <td class="border border-blue-200 px-4 py-2">Dinonaktifkan sebagai selama 2 tahun atau dinonaktifkan sebagai mahasiswa</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">-</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
-                        <td class="border border-blue-200 px-4 py-2 text-center">
+                        <td class="border border-[#132145] px-4 py-2">5</td>
+                        <td class="border border-[#132145] px-4 py-2">IRSA</td>
+                        <td class="border border-[#132145] px-4 py-2">12-11-2024</td>
+                        <td class="border border-[#132145] px-4 py-2">Terlibat dalam tindak kriminal dan dinyatakan bersalah oleh pengadilan</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">I</td>
+                        <td class="border border-[#132145] px-4 py-2">Dinonaktifkan sebagai selama 2 tahun atau dinonaktifkan sebagai mahasiswa</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">-</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-[#132145] px-4 py-2 text-center">
                             <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 <img src="../../Public/Details.svg" alt="" class="">
                                     <span class="ml-2">Detail</span>

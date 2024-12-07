@@ -78,19 +78,20 @@
     </div>
 
       <!-- Table Start -->
-      <div class="bg-white p-8 rounded-lg shadow-md w-11/12 lg:w-3/4 ml-80 mt-10">
+      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 lg:w-3/4 ml-80 mt-10">
         <div class="overflow-x-auto overflow-y-auto max-h-[500px]">
             <table class="w-full border-collapse border border-blue-200 text-sm text-left">
                 <thead class="bg-white text-gray-800">
                     <tr>
                         <th class="border border-blue-200 px-4 py-2">No</th>
-                        <th class="border border-blue-200 px-4 py-2 w-1/4">Nama Mahasiswa</th>
+                        <th class="border border-blue-200 px-4 py-2 w-1/3">Nama Mahasiswa</th>
                         <th class="border border-blue-200 px-4 py-2">Tanggal Pelanggaran</th>
                         <th class="border border-blue-200 px-4 py-2">Deskripsi Pelanggaran</th>
                         <th class="border border-blue-200 px-4 py-2">Tingkat</th>
                         <th class="border border-blue-200 px-4 py-2">Sanksi</th>
-                        <th class="border border-blue-200 px-4 py-2">Tanggal Sanksi</th>
+                        <th class="border border-blue-200 px-4 py-2 w-1/5">Tanggal Sanksi</th>
                         <th class="border border-blue-200 px-4 py-2">Status Pelanggaran</th>
+                        <th class="border border-blue-200 px-4 py-2">Pelapor</th>
                         <th class="border border-blue-200 px-4 py-2">Lainnya</th>
                     </tr>
                 </thead>
@@ -104,15 +105,16 @@
                         <td class="border border-blue-200 px-4 py-2">Teguran lisan disertai surat pernyataan bermaterai yang ditandatangani mahasiswa dan DPA</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">12-11-2024</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">Selesai</td>
+                        <td class="border border-blue-200 px-4 py-2 text-center">Dosen</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">
-                            <div class="flex justify-center space-x-2"> 
+                            <div class="flex flex-row justify-center space-x-2"> 
                                 <button type="button" onclick="window.location.href='detailPelanggaran.php'" 
                                     class="flex items-center w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                     <img src="../../Public/Details.svg" alt="" class="">
                                     <span class="ml-2">Detail</span>    
                                 </button>
                                 <button type="button" 
-                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md ml-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                     <img src="../../Public/Trash.svg" alt="">
                                     <span class="ml-2">Hapus</span>
                                 </button>
@@ -128,11 +130,19 @@
                         <td class="border border-blue-200 px-4 py-2">Teguran tertulis, pemanggilan orang tua/wali, serta surat pernyataan tidak mengulangi bermaterai</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">-</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-blue-200 px-4 py-2 text-center">Dosen12</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">
-                            <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                <img src="../../Public/Details.svg" alt="" class="">
-                                    <span class="ml-2">Detail</span>
-                            </button>
+                            <div class="flex justify-center">
+                                <button class="flex items-center w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    <img src="../../Public/Details.svg" alt="" class="">
+                                        <span class="ml-2">Detail</span>
+                                </button>
+                                <button type="button" 
+                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md ml-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                        <img src="../../Public/Trash.svg" alt="">
+                                        <span class="ml-2">Hapus</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="bg-white">
@@ -144,11 +154,19 @@
                         <td class="border border-blue-200 px-4 py-2">Surat pernyataan, tugas khusus seperti membersihkan area tertentu</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">12-11-2024</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">Selesai</td>
+                        <td class="border border-blue-200 px-4 py-2 text-center">Dosen</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">
-                            <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                <img src="../../Public/Details.svg" alt="" class="">
-                                    <span class="ml-2">Detail</span>
-                            </button>
+                            <div class="flex justify-center">
+                                <button class="flex items-center w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    <img src="../../Public/Details.svg" alt="" class="">
+                                        <span class="ml-2">Detail</span>
+                                </button>
+                                <button type="button" 
+                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md ml-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                        <img src="../../Public/Trash.svg" alt="">
+                                        <span class="ml-2">Hapus</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="bg-[#F9FAFB]">
@@ -160,11 +178,19 @@
                         <td class="border border-blue-200 px-4 py-2">Penggantian kerugian dan tugas layanan sosial</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">-</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-blue-200 px-4 py-2 text-center">Dosen13</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">
-                            <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                <img src="../../Public/Details.svg" alt="" class="">
-                                    <span class="ml-2">Detail</span>
-                            </button>
+                            <div class="flex justify-center">
+                                <button class="flex items-center w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    <img src="../../Public/Details.svg" alt="" class="">
+                                        <span class="ml-2">Detail</span>
+                                </button>
+                                <button type="button" 
+                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md ml-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                        <img src="../../Public/Trash.svg" alt="">
+                                        <span class="ml-2">Hapus</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                     <tr class="bg-[#F9FAFB]">
@@ -176,11 +202,19 @@
                         <td class="border border-blue-200 px-4 py-2">Dinonaktifkan sebagai selama 2 tahun atau dinonaktifkan sebagai mahasiswa</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">-</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">Belum Selesai</td>
+                        <td class="border border-blue-200 px-4 py-2 text-center">Dosen15</td>
                         <td class="border border-blue-200 px-4 py-2 text-center">
-                            <button class="flex flex-row w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                                <img src="../../Public/Details.svg" alt="" class="">
-                                    <span class="ml-2">Detail</span>
-                            </button>
+                            <div class="flex justify-center">
+                                <button class="flex items-center w-28 px-4 py-2 bg-[#132145] text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                                    <img src="../../Public/Details.svg" alt="" class="">
+                                        <span class="ml-2">Detail</span>
+                                </button>
+                                <button type="button" 
+                                    class="flex flex-row w-28 px-4 py-2 bg-[#FF3B30] text-white font-semibold rounded-lg shadow-md ml-2 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                        <img src="../../Public/Trash.svg" alt="">
+                                        <span class="ml-2">Hapus</span>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
